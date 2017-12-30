@@ -1,0 +1,53 @@
+REFF:
+============
+
+bedanya insert menggunakan save() dan mass assignment ialah, save() dia tidak berdasarkan assigment field yang akan ditentukan untuk
+di insert. jika mass assigment create dia menggunakan method create() untuk insert nya namun jika insert biasa dia menggunakan
+save(). cari digoogle perbedaan create dan save signal () pada laravel.
+
+1.buka routes/web.php
+tambahkan : 
+
+## 052-creating-data-and-configuring-mass-assignment
+
+Route::get('create', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	Post::create(['title' => 'the create method', 'content' => 'wow I\'am learning alot dani']); # jika pakai use App\Post;
+
+});
+
+# jika dijalankan cms.dev/create pada model belum di set mass assigmentnya maka akan terjadi error MassAssignmentException in Mode.php
+
+
+# Solusinya kita set mass assigment dulu pada model Post
+2. buka model Post.php  di App/Post.php
+tambahkan :
+
+   protected $fillable = [
+     'title',
+     'content'
+    ];
+
+
+sehingga :
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    //
+    // protected $table = 'posts';
+
+    // protected $primaryKey = 'id';
+
+    protected $fillable = [
+     'title',
+     'content'
+    ];
+}
+
+3. jalankan kembali create data cms.dev/create pastikan berhasil insert ke table posts

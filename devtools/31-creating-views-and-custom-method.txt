@@ -1,0 +1,51 @@
+REFF:
+===========
+1. buka PostsController.php
+tambahkan : 
+
+
+  public function contact(){
+        return view('contact');
+    }
+
+
+# JIKA contact.blade.php berada di views/pages/contact.blade.php PAKAI : 
+
+  public function contact(){
+        return view('pages/contact'); # atau return view('pages.contact'); 
+    }
+
+
+2. buat contact.blade.php di views
+isikan :
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Laravel</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Styles -->
+    
+    </head>
+    <body>
+       
+    <div class="container">
+      <h1>Contact Page</h1>
+    </div>
+   
+    </body>
+</html>
+
+3. buka routes/web.php tambahkan :
+
+Route::get('contact', 'PostsController@contact');
+
+4.buka url : cms.dev/contact
+

@@ -1,0 +1,15 @@
+REFF:
+==============
+1. buka .env :
+- buat database laravel_cms
+- setting env sesuaikan dengan host user password dan nama db yang dibuat
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laraforbeginnerbecomemaster
+DB_USERNAME=root
+DB_PASSWORD=
+
+
+2. php artisan migrate

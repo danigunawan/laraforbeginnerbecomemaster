@@ -1,0 +1,56 @@
+REFF:
+==========
+1. membuat model Post 
+php artisan make:model Post
+
+# Jika beserta migrasinya
+php artisan make:model Post -m
+
+2. buka model app/Post.php
+
+tambahkan :
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+   //
+   // protected $table = 'posts';
+
+  //protected $primaryKey = 'id';
+}
+
+
+
+3. buka routes/web.php
+
+tambahkan : 
+
+//##### DATABASE ORM ELOQUENT ########### //
+
+Route::get('/read', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+
+	$posts = Post::all(); # jika pakai use App\Post;
+
+	foreach ($posts as $key => $post) {
+		return $post->title;
+	}
+
+});
+
+
+Route::get('/find', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	$post = Post::find(1); # jika pakai use App\Post;
+
+	return $post->title;
+
+
+});
+
+4. cms.dev/find

@@ -1,2 +1,6 @@
 REFF:
 =============
+1. php artisan make:controller PostController
+
+# Jika ingin menggunakan resources controller
+2. php artisan make:controller --resource PostController # beserta resourcesnya ada (index, create, store, show, edit, update, destroy)

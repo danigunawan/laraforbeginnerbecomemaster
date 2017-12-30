@@ -1,0 +1,11 @@
+REFF:
+=================
+1. buka routes/web.php tambahkan :
+
+Route::get('/update', function(){
+	$updated = DB::update('update posts set title="Update Title" where id = ?', [1]);
+	return $updated;
+});
+
+
+2. cms.dev/update

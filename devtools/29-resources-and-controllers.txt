@@ -1,0 +1,48 @@
+REFF:
+=============
+1. php artisan make:controller --resource PostController # beserta resourcesnya ada (index, create, store, show, edit, update, destroy)
+2. buka routes/web.php
+tambahkan : 
+
+
+Route::resource('posts', 'PostsController');
+
+3. cek route php artisan route:list
+
+? php artisan route:list
++--------+-----------+-------------------+---------------+---------------------------------------------+--------------+
+| Domain | Method    | URI               | Name          | Action                                      | Middleware   |
++--------+-----------+-------------------+---------------+---------------------------------------------+--------------+
+|        | GET|HEAD  | api/user          |               | Closure                                     | api,auth:api |
+|        | GET|HEAD  | posts             | posts.index   | App\Http\Controllers\PostController@index   | web          |
+|        | POST      | posts             | posts.store   | App\Http\Controllers\PostController@store   | web          |
+|        | GET|HEAD  | posts/create      | posts.create  | App\Http\Controllers\PostController@create  | web          |
+|        | GET|HEAD  | posts/{post}      | posts.show    | App\Http\Controllers\PostController@show    | web          |
+|        | PUT|PATCH | posts/{post}      | posts.update  | App\Http\Controllers\PostController@update  | web          |
+|        | DELETE    | posts/{post}      | posts.destroy | App\Http\Controllers\PostController@destroy | web          |
+|        | GET|HEAD  | posts/{post}/edit | posts.edit    | App\Http\Controllers\PostController@edit    | web          |
++--------+-----------+-------------------+---------------+---------------------------------------------+--------------+
+
+4. buka PostsController.php
+
+# METHOD SHOW
+- tambahkan pada method show :   
+
+public function show($id)
+    {
+        //
+        return "this is the show method" . $id;
+    }
+- buka cms.dev/posts/1
+
+
+# METHOD CREATE 
+- tambahkan pada method create:   
+
+  public function create()
+    {
+        //
+        return "im create method";
+    }
+
+- buka cms.dev/posts/create

@@ -1,0 +1,4 @@
+REFF:
+https://github.com/vlucas/phpdotenv
+=================
+TENTANG PERKENALAN ENV CONFIG PADA LARAVEL

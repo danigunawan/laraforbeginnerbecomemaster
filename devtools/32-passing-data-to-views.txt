@@ -1,0 +1,123 @@
+REFF:
+==================
+1. buka routes/web.php
+- matikan //Route::resource('posts', 'PostController');
+- tambahkan :
+Route::get('post/{id}', 'PostsController@show_post');
+
+## PASSING CARA 1 (WITH)
+2. buka PostsController.php
+tambahkan method show_post($id) beserta parameter id yang akan dipassing diroute ke view:
+
+public function show_post($id){
+        return view('post')->with('id', $id);
+    }
+
+3. buat post.blade.php di views
+isikan : 
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Laravel</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Styles -->
+    
+    </head>
+    <body>
+       
+    <div class="container">
+      <h1>Post {{$id}}</h1>
+    </div>
+   
+    </body>
+</html>
+
+4. coba akses cms.dev/post/inijudulbaruya
+
+
+
+## PASSING CARA 2 (COMPACT)
+1. buka PostsController.php
+tambahkan method show_post($id) beserta parameter id yang akan dipassing diroute ke view:
+
+public function show_post($id){
+         return view('post', compact('id'));
+    }
+
+2. buat post.blade.php di views
+isikan : 
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Laravel</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Styles -->
+    
+    </head>
+    <body>
+       
+    <div class="container">
+      <h1>Post {{$id}}</h1>
+    </div>
+   
+    </body>
+</html>
+
+3. coba akses cms.dev/post/inijudulbaruya
+
+
+## PASSING 3 PARAMETER
+
+1. buka routes/web.php
+- matikan //Route::resource('posts', 'PostController');
+- tambahkan :
+Route::get('post/{id}/{name}/{passowrd}', 'PostsController@show_post');
+
+2. buka PostsController.php
+tambahkan method show_post($id) beserta parameter id yang akan dipassing diroute ke view:
+
+public function show_post($id){
+         return view('post', compact('id','name','password'));
+    }
+
+3. buat post.blade.php di views
+isikan : 
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Laravel</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Styles -->
+    
+    </head>
+    <body>
+       
+    <div class="container">
+      <h1>Post {{$id}} {{$name}} {{$password}} </h1>
+    </div>
+   
+    </body>
+</html>
+
+4. coba akses cms.dev/post/10/judul/detail

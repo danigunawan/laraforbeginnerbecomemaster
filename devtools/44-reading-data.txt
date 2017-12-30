@@ -1,0 +1,34 @@
+REFF:
+==============
+1.buka routes/web.php
+
+tambahkan : 
+
+Route::get('read', function(){
+	$results = DB::select('select * from posts where id = ?', [1]);
+
+	foreach ($results as $key => $post) {
+		return $post->title;
+	}
+});
+
+
+atau : 
+
+
+Route::get('read', function(){
+	$results = DB::select('select * from posts where id = ?', [1]);
+
+	return $results;
+});
+
+atau var_dump:
+
+Route::get('read', function(){
+	$results = DB::select('select * from posts where id = ?', [1]);
+
+	return var_dump($results);
+});
+
+
+2. akses cms.dev/read

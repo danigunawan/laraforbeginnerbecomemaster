@@ -1,0 +1,31 @@
+REFF:
+==============
+cara insert data dengan ORM.
+
+1. Buka routes/web.php
+
+tambahkan : 
+
+//## ORM CRUD ## //
+
+//Insert
+Route::get('/basicinsert', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	$post = new Post; # jika pakai use App\Post;
+	$post->title = 'New Eloquent Title Insert';
+	$post->content = 'Wow Eloquent dahsyat content';
+	$post->save();
+});
+
+
+
+
+//Insert By ID
+
+Route::get('/basicinsertbyid', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	$post = Post::find(1); # jika pakai use App\Post;
+	$post->title = 'New Eloquent Title Insert';
+	$post->content = 'Wow Eloquent dahsyat content';
+	$post->save();
+});

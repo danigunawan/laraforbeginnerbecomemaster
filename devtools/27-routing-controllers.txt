@@ -1,0 +1,10 @@
+REFF:
+============
+1. buka routes/web.php
+tambahkan :
+Route::get('post','PostController@index'); # cms.dev/post
+
+2. buka PostController.php
+pada method index tambahkan : 
+
+return "its working";

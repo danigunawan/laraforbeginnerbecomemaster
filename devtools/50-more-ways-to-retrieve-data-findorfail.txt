@@ -1,0 +1,27 @@
+REFF:
+===========
+untuk memilih data dari ribuan data maka kita sering menggunakan where untuk sebagai patokan ID nya , 
+dan bagaimana jika di where tersebut datanya tidak ada ? maka akan munculan sebuah error yang disebabkan where dengan
+ID yang ditentukan tidak ditemukan , bagaimana jika datanya tidak ada di where maka fungsi tersebut tidak akan error ?
+ maka kita pakai Findorfail agar data yang tidak ditemukan akan di Fail.
+
+
+1. buka routes/web.php
+
+tambahkan : 
+
+
+Route::get('/findmore', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	$posts = Post::findOrFail(1); # jika pakai use App\Post;
+
+	return $posts;
+
+
+});
+
+# selain findOrFail ada fungsi lainnya seperti
+// Fungsi ORM lainnya
+//$posts = Post::where('users_count', '<', 50)->firstOrFail();
+
+2. cms.dev/findmore

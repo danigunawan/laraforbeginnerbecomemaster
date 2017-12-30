@@ -1,0 +1,66 @@
+REFF:
+==========
+1. buka PostsController.php
+
+pada function contact() tambahkan/ubah menjadi :
+
+    public function contact(){
+	//$people = [];
+        $people = ['Edwin', 'Jose', 'James', 'Peter','Maria'];
+
+        return view('contact', compact('people'));
+    }
+
+2. buka views/contact.blade.php tambahkan pada @section content tambahkan : 
+
+@section('content')
+
+<h1>Contact Page</h1>
+
+@if(count($people))
+ 
+    <ul>
+
+     @foreach($people as $person)
+
+    <li>{{$person}}</li>
+    
+    @endforeach
+
+    </ul>
+
+@endif
+
+@stop
+
+# sehingga :
+
+
+@extends('layouts.app')
+
+@section('content')
+
+<h1>Contact Page</h1>
+
+@if(count($people))
+ 
+    <ul>
+
+     @foreach($people as $person)
+
+    <li>{{$person}}</li>
+    
+    @endforeach
+
+    </ul>
+
+@endif
+
+@stop
+
+
+@section('footer')
+
+{{-- <script>alert('Hello Visitor')</script> --}}
+
+@stop

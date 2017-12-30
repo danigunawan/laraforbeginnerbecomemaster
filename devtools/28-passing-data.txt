@@ -1,0 +1,16 @@
+REFF:
+============
+1. buka routes/web.php
+ubah menjadi  :
+Route::get('post/{id}','PostController@index'); # cms.dev/post
+
+2. buka PostController.php
+pada method index ubah : 
+
+public function index($id)
+    {
+        //
+        return "its working number" . $id;
+    }
+
+3. akses dengan url : cms.dev/post/3

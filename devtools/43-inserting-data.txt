@@ -1,0 +1,15 @@
+REFF:
+==================
+1. buka routes/web.php
+
+tambahkan : 
+
+
+// use Illuminate\Support\Facades\DB;
+
+Route::get('insert', function(){
+	DB::insert('insert into posts(title, content) values(?, ?)', ['PHP With Laravel', 'Laravel  is the best things that has happened to PHP']); // DB:: ini static method bawaan laravel untuk raw query insert adalah classnya
+});
+
+
+2. coba akses cms.dev/insert # pastikan data masuk di table posts

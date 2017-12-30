@@ -1,0 +1,17 @@
+REFF:
+==============
+1. buka routes/web.php
+tambahkan : 
+
+
+//Read Finding With Constraints
+Route::get('/findwhere', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	$posts = Post::where('id', 2)->orderBy('id', 'desc')->take(1)->get(); # jika pakai use App\Post;
+
+	return $posts;
+
+
+});
+
+2. cms.dev/findwhere
