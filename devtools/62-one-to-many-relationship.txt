@@ -1,0 +1,27 @@
+REFF:
+=============
+
+hasmany (one to many) adalah a banyak data b dan b adalah bagian/milik dari a
+
+kasus dibawah ini adalah user punya banyak posts.
+
+1. buka routes/web.php
+tambahkan :
+
+#HASMANY (ONE TO MANY RELATIONSHIP)
+Route::get('/posts', function(){
+	$user = User::find(1);
+
+	foreach ($user->posts as $key => $post) {
+		return $post->title . "<br>";
+	}
+});
+
+2. buka model User.php
+tambahkan pada class User:
+
+  public function posts(){
+        return $this->hasMany('App\Post');
+    }
+
+3. cms.dev/posts

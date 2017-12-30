@@ -1,0 +1,112 @@
+REFF:
+Kali ini kita akan belajar tentang soft deletes pada Laravel. Yang mana soft deletes ini adalah 
+cara kita menghapus data tapi data tersebut tidak benar benar dihapus. Jadi nanti idenya sendiri ketika user menghapus data berdasarkan idnya 
+maka kita tidak benar benar menghapusnya dari database tapi kita hanya menyimpan tanggalnya 
+dibagian kolom deleted_at dan data tersebut akan hilang ketika kita tampilkan dengan query biasa. 
+Untuk itu didatabasenya kita sediakan satu kolom baru yang saya beri nama deleted_at tipe 
+datanya timestamps dan defaultnya NULL sebagai berikut
+=====================
+1. Buka Model Post di app/Post.php
+- tambahkan :
+
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+- dan pada class Post extends Model :
+
+use SoftDeletes;
+
+protected $dates = ['deleted_at'];
+
+# sehingga :
+
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Post extends Model
+{
+
+	use SoftDeletes;
+
+    //
+    // protected $table = 'posts';
+
+    // protected $primaryKey = 'id';
+
+	protected $dates = ['deleted_at'];
+
+
+    protected $fillable = [
+     'title',
+     'content'
+    ];
+}
+
+
+
+2. buat field/kolom deleted_at (soft_deletes) pada tabel post di database :
+
+php artisan make:migration add_deleted_at_column_to_posts_tables --table=posts
+
+- buka file migrasi :
+
+- tambahkan pada method up migrasi :
+ $table->SoftDeletes();
+
+- tambahkan pada method down migrasi :
+ $table->dropColumn('deleted_at');
+
+
+# sehingga : 
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddDeletedAtColumnToPostsTables extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            //
+            $table->SoftDeletes();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('posts', function (Blueprint $table) {
+            //
+             $table->dropColumn('deleted_at');
+        });
+    }
+}
+
+3. php artisan migrate
+
+4. buka web/routes.php tambahkan :
+
+// SOFT DELETES
+Route::get('/softdelete', function(){
+
+	Post::find(6)->delete();
+
+});
+
+5. cms.dev/softdelete

@@ -1,0 +1,84 @@
+REFF:
+================
+1. buka model User.php di app/User.php
+ubah fungsi :
+
+    public function roles(){
+        return $this->belongsToMany('App\Role');
+    }
+
+
+menjadi :
+
+   public function roles(){
+        return $this->belongsToMany('App\Role');
+
+        // to costumize tables name and columns follow format below
+         // return $this->belongsToMany('App\Role', 'user_roles', 'user_id', 'role_id');
+    }
+
+### CARA 1
+2. Buka model Role.php di app/Role.php
+tambahkan pada class Role :
+   
+
+   public function user(){
+    	return $this->belongsToMany('App\User');
+    }
+
+
+3. buka routes/web.php
+
+
+// Part 66 66-querying-intermediate-table.txt
+// ACCESING the Intermediate table / pivot
+
+# PIVOT ACCESS V1
+Route::get('/user/pivot', function(){
+	$user = User::find(1);
+
+	foreach ($user->roles as $key => $role) {
+		return  $role->pivot;
+	}
+});
+
+4. cms.dev/user/pivot
+
+
+### CARA 2
+1. Buka model Role.php di app/Role.php
+tambahkan pada class Role :
+   
+
+   public function user(){
+    	return $this->belongsToMany('App\User')->withPivot('created_at');
+    }
+
+1. Buka model User.php di app/Role.php
+tambahkan pada class Role pada method roles ->withPivot('created_at'); :
+
+    public function roles(){
+        return $this->belongsToMany('App\Role')->withPivot('created_at');
+
+        // to costumize tables name and columns follow format below
+         // return $this->belongsToMany('App\Role', 'user_roles', 'user_id', 'role_id');
+    }
+ 
+
+
+2. buka routes/web.php
+tambahkan :
+
+# PIVOT ACCESS V2 CREATED_AT
+Route::get('/user/pivot2', function(){
+	$user = User::find(1);
+
+	foreach ($user->roles as $key => $role) {
+		return  $role->pivot->created_at;
+	}
+});
+
+
+3. isikan value created_at untuk masing masing id pada table role_user
+
+cms.dev/user/pivot

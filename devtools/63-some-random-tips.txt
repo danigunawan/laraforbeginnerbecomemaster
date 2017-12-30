@@ -1,0 +1,4 @@
+REFF:
+====================
+cuman tips random
+1. php artisan migrate:rollback / refresh/ migrate

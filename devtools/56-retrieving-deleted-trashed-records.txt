@@ -1,0 +1,61 @@
+REFF:
+CARA READ DATA YANG MENGGUNAKAN SOFTDELETES
+=============
+1. buka routes/web.php
+
+- JANGAN GUNAKAN FUNGSI READ BIASA SEPERTI INI :
+
+// READ biasa TIDAK AKAN TAMPIL DATA SOFTDELETES
+Route::get('/readsoftdelete', function(){
+
+	$post = Post::find(7);
+	return $post;
+});
+
+# DATA AKAN BLANK KARENA LARAVEL TIDAK MEMBACA FIND MODEL YANG MENGGUNAKAN ORM SOFTDELETES
+
+
+
+- SOLUSI GUNAKAN SCRIPT DIBAWAH INI :
+
+## VERSI 1
+// READ SOFTDELETES
+Route::get('/readsoftdelete', function(){
+
+	// $post = Post::find(7);
+	// return $post;
+	$post = Post::withTrashed()->where('id',7)->get();
+	return $post;
+});
+
+
+## VERSI 2
+// READ SOFTDELETES V2 MENAMPILKAN SELURUH DATA YANG TRASHED/SOFTDELETES (ONLYTRASHED)
+Route::get('/readsoftdeleteonlytrashed', function(){
+
+	// $post = Post::find(7);
+	// return $post;
+	$post = Post::onlyTrashed()->where('is_admin', 0)->get();
+	return $post;
+});
+
+
+## VERSI 3
+// READ SOFTDELETES V3 WHERE CONDITION 
+// kondisi ini data akan tampil ketika pertama kali create data, field/kolom deleted_at akan NULL dan belum digunakan untuk soft delete 
+// maka berlaku kondisi fungsi dibawah ini
+
+Route::get('/readsoftdeletev3', function(){
+
+	// $post = Post::find(7);
+	// return $post;
+	$post = Post::withTrashed()->where('is_admin', 0)->get();
+	return $post;
+});
+
+
+
+
+2. cms.dev/readsoftdelete
+cms.dev/readsoftdelete3
+cms.dev/readsoftdeleteonlytrashed

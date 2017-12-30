@@ -1,3 +1,13 @@
 REFF:
 ================
-1.
+1. buka routes/web.php
+tambahkan :
+
+## UPDATE
+Route::get('/update', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	Post::where('id', 2)->where('is_admin', 0)->update(['title' => 'NEW PHP TITLE', 'content' => 'i love my instructure dani']); # jika pakai use App\Post;
+
+});
+
+2. cms.dev/update

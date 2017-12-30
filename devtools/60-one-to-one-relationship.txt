@@ -1,0 +1,81 @@
+REFF:
+=============
+DISINI Kita akan menggunakan relasi one to one dimana user punya satu data post begitu juga post belongs_to atau bagian/milik si user.
+
+1. buka file migrasi 2017_12_30_105935_create_posts_table.php
+
+kita tambahkan pada up migrasi pada table posts sebuah field/kolom FK dari model user yakni user_id mappingnya:
+
+$table->integer('user_id')->unsigned();
+
+sehingga menjadi : 
+
+  public function up()
+    {
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            // $table->string('title')->unique();
+            // $table->string('title')->default();
+            // $table->string('title')->unsign();
+            // $table->string('title')->integer();
+            // $table->string('title')->nullable();
+            $table->string('title');
+            $table->text('content');
+            $table->timestamps();
+        });
+    }
+
+
+2. kita refresh migrasinya dulu agar semua data kembali dari awal dari database dan dimigrate kembali
+php artisan migrate:refresh
+
+3. kita insert data user sebagai dummy menggunakan heidiSQL :
+
+table users
+========
+id = 1
+name = dani
+email = dhanexlab@gmail.com
+password = 123
+remember_token = biarkan aja
+created_at = 2017-12-30 21:20:43
+updated_at = 2017-12-30 21:20:43
+
+table post
+=======
+id = 1
+user_id = 1 (FK dari users id = 1)
+content = sadas
+created_at = 2017-12-30 21:23:21
+updated_at = 2017-12-30 21:23:21
+is_admin = 0
+deleted_at = lewati saja
+
+
+4. buka model User.php di app/User.php
+kasusnya : si user punya 1 post (hasOne) atau one-to-one
+
+tambahkan fungsi kepost pada class User:
+
+    public function kepost(){
+        return $this->hasOne('App\Post'); # jika tidak menggunakan use App\Post;
+        // return $this->hasOne(Post::class, 'user_id') # jika menggunakan use App\Post;
+    }
+
+5. buka routes/web.php
+tambahkan :
+
+use App\User;
+
+dan pada route fungsi :
+
+## ELOQUENT RELATIONSHIPS HASONE HASMANY MANY TO MANY
+
+#HASONE (ONE TO ONE RELATIONSHIP)
+Route::get('/user/post/{id}', function($id){
+	return User::find($id)->kepost;
+	// return User::find($id)->kepost->title;
+});
+
+6. cms.dev/user/post/1

@@ -1,0 +1,130 @@
+REFF:
+=============
+1. buat model Role
+php artisan make:model Role -m
+
+- buka file migrasi 2017_12_30_150503_create_roles_table.php dan tambahkan pada function up :
+
+ $table->string('name'); 
+
+sehingga : 
+
+    public function up()
+    {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+    }
+
+
+2. buat migrasi untuk membuat table role_user
+php artisan make:migration create_users_roles_table --create=role_user
+
+- buka file migrasi 2017_12_30_150645_create_users_roles_table.php dan tambahkan pada function up :
+
+            $table->integer('user_id');
+            $table->integer('role_id');
+
+sehingga :
+
+    public function up()
+    {
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->integer('role_id');
+            $table->timestamps();
+        });
+    }
+
+
+
+3. kita insert data user sebagai dummy menggunakan heidiSQL sebagai data mapping roles :
+
+table users
+========
+id = 1
+name = dani
+email = dhanexlab@gmail.com
+password = 123
+remember_token = biarkan aja
+created_at = 2017-12-30 21:20:43
+updated_at = 2017-12-30 21:20:43
+
+table roles
+=======
+id=1
+name = administrator
+created_at = terserah
+updated_at = terserah
+
+id=2
+name = subscriber
+created_at = terserah
+updated_at = terserah
+
+
+table role_user
+=======
+# admin
+user_id = 1
+role_id = 1
+
+# subscriber
+user_id = 2
+role_id = 2
+
+
+4. buka model User.php di App/User.php
+tambahkan pada class User:
+
+    public function roles(){
+        return $this->belongsToMany('App\Role');
+    }
+
+5. buka routes/web.php
+tambahkan :
+
+GET ROLES V1 - STATIS
+=============
+
+##MANY TO MANY RELATIONSHIPS
+Route::get('/user/{id}/role', function(){
+	$user = User::find(1);
+
+	foreach ($user->roles as $key => $role) {
+		return $role->name . "<br>";
+	}
+});
+
+# cms.dev/user/1/role
+
+
+GET ROLES V2 - DINAMIS
+=============
+##MANY TO MANY RELATIONSHIPS
+Route::get('/user/{id}/role', function($id){
+	$user = User::find($id);
+
+	foreach ($user->roles as $key => $role) {
+		return $role->name . "<br>";
+	}
+});
+
+# cms.dev/user/1/roledinamis
+
+
+GET ROLES V3 - DINAMIS ARRAY GET JSON
+=============
+
+Route::get('/user/{id}/role', function($id){
+	$user = User::find($id)->roles()->orderBy('id','desc')->get();
+
+	return $user;
+
+});
+
+# cms.dev/user/1/roledinamisarray
+

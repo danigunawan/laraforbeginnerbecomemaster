@@ -1,0 +1,22 @@
+REFF:
+=============
+1. buka routes/web.php
+tambahkan :
+
+# INVERSE RELATIONSHOP HAS ONE
+Route::get('/post/{id}/user', function($id){
+	return Post::find($id)->user->name;
+
+});
+
+
+2. buka model Post.php di app/Post.php
+tambahkan pada class Post :
+
+   public function user(){
+
+   	return $this->belongsTo('App\User');
+   
+   }
+
+3. cms.dev/post/1/user

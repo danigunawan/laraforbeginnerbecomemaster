@@ -1,0 +1,202 @@
+REFF:
+https://www.onphpid.com/belajar-laravel-apa-itu-has-many-through-relationships-pada-laravel-5-3-untuk-pemula.html
+=============
+Pada dokumentasi Laravel 5.3 disebutkan bahwa Has Many Through 
+merupakan relasi yang dapat dijadikan jalan pintas atau shortcut untuk mengakses data dari tabel lain, 
+namun dilakukan dengan pendekatan dari tabel lain atau tabel yang dapat menghubungkan data tersebut. 
+contoh nya :
+
+kotas
+     id - integer
+     nama_kota - string
+ 
+users
+     id - integer
+     kota_id - integer
+     name - string
+ 
+kendaraans
+     id - integer
+     user_id - integer
+     nama_kendaraan - string
+
+KET : tabel kendaraan tidak ada hubungan dengan table kota tapi kita dapat semua data kendaraan yang ada di kota A dengan memanfaatkan tabel users yang berelasi dengan
+tabel kendaraan.
+
+# PADA KASUS DIBAWAH INI ADALAH table countries tidak ada hubungannya dengan posting tapi kita dapat mendapatkan semua data posting yang ada di user_id 1 misalnya
+dengan memanfaatkan table countries yang berelasi dengan tabel users. Untuk mendapatkan semua posts melalui model Country.
+
+## PART 1 eps 67
+
+1. buat model Country
+php artisan make:model Country -m 
+
+2. buat migrasi menambahkan kolom country_id (FK) ke table users
+php artisan make:migration add_country_id_column_to_users --table=users
+
+3. buka file migrasi 2017_12_30_173038_add_country_id_column_to_users.php
+
+- tambahkan pada migrasi up :
+
+ $table->integer('country_id');
+
+- dan pada migrasi down :
+
+$table->dropColumn('country_id');
+
+- sehingga :
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddCountryIdColumnToUsers extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            //
+            $table->integer('country_id');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            //
+             $table->dropColumn('country_id');
+        });
+    }
+}
+
+
+4. buka file migrasi 2017_12_30_172843_create_countries_table.php
+- tambahkan pada migrasi up :
+
+$table->string('name');
+
+sehingga : 
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateCountriesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('countries', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('countries');
+    }
+}
+
+5. php artisan migrate
+
+6. kita insert data user sebagai dummy relasi antara user dengan country menggunakan heidiSQL :
+
+table countries
+========
+isikan value name dengan nama negara :
+- DR id:1
+- Rusia id:2
+- US id:3
+- India id:4
+- Israel id:5
+- United Kingdom id:6
+
+table users
+=======
+FK country_id isi dengan id PK pada table countries
+
+
+## PART 2 eps 68
+7. buka model Country.php di app/Country.php
+tambahkan fungsi posts :
+
+  
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Country extends Model
+{
+    /**
+     * Untuk mendapatkan semua posts melalui model Country.
+     * Jika table kalian mengikuti konvensi dari Laravel
+     * Maka pakai yang di bawah ini
+     * Konvensi tsb yaitu nama Foreign key nya user_id, post_id, dll
+     * dan Primary key nya id
+     */
+    public function posts(){
+    	//CARA Laravel
+    	return $this->hasManyThrough('App\Post', 'App\User');
+
+    	//CARA Bukan Laravel
+    	// return $this->hasManyThrough(
+    	//'App\Post', 'App\User', 
+    	//'country_id', //foreign key di table users misalnya 
+    	//'user_id');  //foreign key di table posts 
+    }
+}
+
+
+ 
+8. buka routes/web.php
+tambahkan : 
+
+use App\Country;
+
+
+
+
+## HAS MANY THROUGH RELATIONS
+
+Route::get('/user/country', function(){
+
+$country = Country::find(1);
+
+foreach ($country->posts as $key => $post) {
+	# code...
+	return $post->title;
+}
+
+});
+
+
+
+9. cms.dev/user/country
+

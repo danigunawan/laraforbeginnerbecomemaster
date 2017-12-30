@@ -1,0 +1,117 @@
+REFF:
+https://elcicko.com/tutorial-lanjutan-relasi-table-pada-laravel-dengan-eloquent
+============
+
+
+Polymorphic Relation memungkinkan kamu untuk merelasikan 1 entitas 
+dengan banyak entitas. Contohnya seperti ini, setiap user dan artikel 
+dapat memiliki komentar. Nah, daripada membuat 2 buah table komentar, 
+kita dapat membuat 1 table saja untuk menampung komentar tersebut 
+dan menampilkannya berdasarkan tipe Model.
+
+
+# CONTOH KASUS DIBAWAH INI ADALAH SETIAP USER DAN POST DAPAT MEMILIKI PHOTO DALAM 1 TABLE UNTUK MENAMPUNG PHOTO TERSEBUT YAKNI DI TABEL PHOTO 
+DARIPADA MEMBUAT 2 TABEL PHOTO.
+
+1. membuat model dan migrasi Photo
+php artisan make:model Photo -m
+
+2. buka file migrasi 2017_12_30_181540_create_photos_table.php
+
+- tambahkan pada migrasi up :
+            $table->string('path');
+            $table->integer('imageable_id');
+            $table->string('imageable_type');
+
+sehingga : 
+
+    public function up()
+    {
+        Schema::create('photos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('path');
+            $table->integer('imageable_id');
+            $table->string('imageable_type');
+            $table->timestamps();
+        });
+    }
+
+
+3. php artisan migrate
+
+4. kita insert data user sebagai dummy menggunakan heidiSQL :
+
+table photos
+========
+#. Insert 1
+id = 1
+imageable_id = 1
+imageable_type = App\User
+
+#. Insert 2
+id = 2
+imageable_id = 2
+imageable_type = App\Post
+
+5. buka model Photo.php di App/Photo.php
+
+tambahkan fungsi pada class Photo :
+
+    public function imageable(){
+    	return $this->morphTo();
+    }
+
+6. buka model Post.php di app/Post.php
+tambahkan fungsi pada class Post :
+
+   public function photos(){
+   	return $this->morphMany('App\Photo', 'imageable');
+   }
+
+7. buka model User.php di app/User.php
+tambahkan fungsi pada class User :
+
+    public function photos(){
+        return $this->morphMany('App\Photo', 'imageable');
+    }
+
+8. buka routes/web.php
+
+
+## POLYMORPHIC RELATIONS
+# setiap user dan post punya photo
+
+# USER POLYMORPHIC
+Route::get('user/photos', function(){
+$users = User::find(1);
+foreach ($users->photos as $key => $photo) {
+	# code...
+	// return $photo;
+	return $photo->path;
+}
+});
+
+
+#POST POLYMORPHIC
+Route::get('user/posts', function(){
+$posts = Post::find(2); # dari imageable_type = App\Post dan imageable_id = 2
+foreach ($posts->photos as $key => $post) {
+	# code...
+	// return $post;
+	// return $post->path;
+	echo $post->path . "<br>";
+}
+});
+
+#POST POLYMORPHIC DINAMIS
+Route::get('user/{id}/posts', function($id){
+$posts = Post::find($id); # dari imageable_type = App\Post dan imageable_id = 2
+foreach ($posts->photos as $key => $post) {
+	# code...
+	// return $post;
+	// return $post->path;
+	echo $post->path . "<br>";
+}
+});
+
+9. cms.dev/user/photos

@@ -1,0 +1,36 @@
+REFF:
+=================
+FORCE DELETE YAITU MENDELETE PERMANEN DATA WALAUPUN MENGGUNAKAN FUNGSI SOFT DELETES
+
+1. buka routes/web.php
+tambahkan :
+
+
+// FORCE DELETE YAITU MENDELETE PERMANEN DATA WALAUPUN MENGGUNAKAN FUNGSI SOFT DELETES
+// SEMUA DATA DIDELETES berdasarkan is_admin = 0
+Route::get('/forcedelete', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	Post::withTrashed()->where('is_admin', 0)->forceDelete();
+});
+
+
+CARA 2 FORCE DELETE BY ID
+==============================
+// FORCE DELETE BY ID
+Route::get('/forcedeletebyid', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	Post::withTrashed()->where('is_admin', 0)->where('id',8)->forceDelete();
+});
+
+CARA 3 DENGAN ONLYTRASHED (Menghapus permanen yanga hanya data softdeletes / deleted_at sudah ada tanggal softdeletes nya) 
+selain softdeletes tidak akan dihapus seperti nilai NULL
+==============================
+
+//FORCE DELETE onlyTrashed by is_admin = 0
+Route::get('/forcedeleteonlytrashed', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	Post::onlyTrashed()->where('is_admin', 0)->forceDelete();
+});
+
+
+2. cms.dev/forcedelete atau cms.dev/forcedeletebyid atau cms.dev/forcedeleteonlytrashed

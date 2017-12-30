@@ -1,0 +1,36 @@
+REFF:
+============
+1. buka routes/web.php
+
+tambahkan : 
+
+## DELETE
+Route::get('/delete', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post; 
+	$post = Post::find(1); # jika pakai use App\Post;
+	$post->delete(); # cara delete ini mencari id dulu baru delete
+});
+
+
+# CARA LAIN UNTUK DELETE PAKAI DESTROY LANGSUNG PAKAI ID
+
+
+## DELETE V2 = DESTROY
+Route::get('/delete2', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	Post::destroy(2); # jika pakai use App\Post;
+	
+});
+
+
+## DELETE V3 = DESTROY BEBERAPA ID YANG DIPILIH DALAM KASUS INI ID 4 DAN 5 keduanya terhapus
+
+Route::get('/delete3', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	Post::destroy([4,5]); # jika pakai use App\Post; 
+
+	// Post::where('is_admin', 0)->delete();
+	
+});
+
+2. cms.dev/delete atau cms.dev/delete2 atau cms.dev/delete3

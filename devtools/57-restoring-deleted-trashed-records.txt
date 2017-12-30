@@ -1,0 +1,32 @@
+REFF:
+===================
+
+CARA MENGEMBALIKAN/RESTORE DATA YANG SUDAH TER SOFT DELETES
+
+1. buka routes/web.php
+
+tambahkan :
+
+// RESTORE SEMUA DATA SOFT DELETES KONDISI is_admin = 0
+
+## CARA 2 - RESTORE ALL SOFTDELETES BY KONDISI is_admin = 0
+Route::get('restoresoftdeletes', function(){
+
+	// $post = Post::find(7);
+	// return $post;
+	$post = Post::withTrashed()->where('is_admin', 0)->restore();
+	return $post;
+});
+
+
+## CARA 2 - RESTORE SOFT DELETES BY ID
+==============
+// RESTORE  DATA SOFT DELETES BY ID
+Route::get('/restoresoftdeletesbyid', function(){
+	// $posts = App\Post; # jika tidak pakai use App\Post;
+	$post = Post::withTrashed()->where('is_admin', 0)->where('id',7)->restore();
+	return $post;
+});
+
+2. cms.dev/restoresoftdeletes
+cms.dev/restoresoftdeletesbyid
