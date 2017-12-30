@@ -1,0 +1,6 @@
+REFF:
+getcomposer.org
+==========
+1. install composer (jika windows pilih windows)
+2. php.exe path pilih direktori path php.exe dari xampp atau laragon
+3. buka command ketik composer

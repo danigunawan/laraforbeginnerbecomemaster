@@ -1,0 +1,4 @@
+REFF:
+
+1. buka phpstrom
+2. open project

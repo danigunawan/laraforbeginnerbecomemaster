@@ -1,0 +1,37 @@
+REFF:
+===============
+mengubah vhost agar url lebih friendly dari misal localhost:300/cms menjadi cms.dev
+1. buka xampp/apache/conf/httpd-vhost.conf
+simpan di line paling bawah :
+
+<VirtualHost *:80>
+ DocumentRoot "C:/xampp/htdocs"
+ ServerName localhost
+</VirtualHost>
+
+<VirtualHost *:80>
+ DocumentRoot "C:/xampp/htdocs/cms/public"
+ ServerName cms.dev
+</VirtualHost>
+
+3. buka drivers/etc/host tambahkan:
+127.0.0.1 localhost
+127.0.0.1 cms.dev
+
+4. restart xampp
+5. cek di url : cms.dev / localhost/dashboard sama aja
+
+
+# jika ingin tambahkan project
+1. cd ke htdocs
+2. composer create-project laravel/laravel todoapp 5.2
+3. buka hosts tambahkan :
+127.0.0.1 todoapp.dev
+4. buka xampp/apache/conf/httpd-vhost.conf tambahkan :
+
+<VirtualHost *:80>
+ DocumentRoot "C:/xampp/htdocs/todoapp/public"
+ ServerName todoapp.dev
+</VirtualHost>
+5. restart xampp
+6. coba cek url todoapp.dev

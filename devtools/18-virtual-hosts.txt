@@ -1,0 +1,98 @@
+REFF:
+============
+merubah url localhost/cms menjadi cms.dev
+1. letak file vhosts
+/:sudo nano ~/.bash_profile
+/:sudo nano /Applications/XAMPP/etc/extra/httpd-vhosts.conf
+
+
+2. letak file httpd
+:/sudo nano /Applications/XAMPP/xamppfiles/etc/httpd.conf
+
+
+3. letak file hosts
+:/sudo nano /etc/hosts
+
+tambahkan :
+
+127.0.0.1 cms.dev
+
+4. /:sudo nano /Applications/XAMPP/etc/extra/httpd-vhosts.conf
+tambahkan :
+
+NameVirtualHost *:80
+
+dan ubah :
+
+<VirtualHost *:80>
+ ServerAdmin webmaster@dummy-host.example.com
+ DocumentRoot "/Applications/XAMPP/xamppfiles/docs/dummy-host.example.com"
+ ServerName dummy-host.example.com
+ ServerAlias www.dummy-host.example.com
+ ErrorLog "logs/dummy-host.example.com-error_log" 
+ CustomLog "logs/dummy-host.example.com-access_log" common
+</VirtualHost>
+
+<VirtualHost *:80>
+ ServerAdmin webmaster@dummy-host2.example.com
+ DocumentRoot "/Applications/XAMPP/xamppfiles/docs/dummy-host2.example.com"
+ ServerName dummy-host.example.com
+ ServerAlias www.dummy-host2.example.com
+ ErrorLog "logs/dummy-host2.example.com-error_log" 
+ CustomLog "logs/dummy-host2.example.com-access_log" common
+</VirtualHost>
+
+menjadi :
+
+<VirtualHost *:80>
+ ServerAdmin webmaster@dummy-host.example.com
+ DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs"
+ ServerName localhost
+ ServerAlias www.localhost
+ CustomLog "logs/dummy-host.example.com-access_log" common
+</VirtualHost>
+
+
+# CMS.dev
+<VirtualHost *:80>
+ ServerAdmin webmaster@dummy-host.example.com
+ DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs/cms/public"
+ ServerName cms.dev
+</VirtualHost>
+
+
+5. Restart XAMPP
+6. buka cms.dev di url pastikan bisa
+
+# JIKA PROJECT BARU INGIN DI VHOST
+1. cd htdocs
+- create-project laravel/laravel todoapp 5.2
+- :/sudo nano /etc/hosts
+isikan :
+
+127.0.0.1 todoapp.dev
+
+- /:sudo nano /Applications/XAMPP/etc/extra/httpd-vhosts.conf
+tambahkan : 
+
+# todoapp.dev
+
+<VirtualHost *:80>
+ ServerAdmin webmaster@dummy-host.example.com
+ DocumentRoot "/Applications/XAMPP/xamppfiles/htdocs/todoapp/public"
+ ServerName todoapp.dev
+</VirtualHost>
+
+- restart xampp
+- buka todoapp.dev pastikan bisa
+- :/sudo nano /Applications/XAMPP/xamppfiles/etc/httpd.conf
+ganti :
+User daemon menjadi User codingfaculty # user daemon di comment saja dinonaktifkan
+- save
+- restart xampp
+
+
+# Menghapus project
+
+#cd ke htdocs
+- rm -rf namaproject/

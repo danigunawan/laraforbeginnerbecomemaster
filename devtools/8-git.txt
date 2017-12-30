@@ -1,0 +1,8 @@
+REFF:
+git-scm.com
+==============
+1. pilih download git windows (jika windows)
+2. pilih use git from the windows command prompt
+3. pilih checkout windows-style, commit unix-style line endings
+4. pilih MinTTY
+5. buka git bash

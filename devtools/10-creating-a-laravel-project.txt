@@ -1,0 +1,4 @@
+REFF:
+=============
+1. buka cmd/gitbash/terminal
+2. composer create-project --prefer-dist laravel/laravel yourprojectname 5.2.29

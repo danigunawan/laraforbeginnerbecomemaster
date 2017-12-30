@@ -1,0 +1,40 @@
+REFF:
+===============
+#route part 1
+1. buka routes.php
+
+# cms.dev
+Route::get('/', function(){
+
+return view('welcome')
+});
+
+#cms.dev/about
+
+Route::get('/about', function(){
+
+return "admin here";
+});
+
+#cms.dev/contact
+
+Route::get('/contact', function(){
+
+return "hi im here contact";
+});
+
+#cms.dev/post/2
+
+Route::get('/post/{id}', function($id){
+
+return "this is post number". $id;
+
+});
+
+#cms.dev/post/2/dani
+
+Route::get('/post/{id}/{name}', function($id, $name){
+
+return "this is post number". $id . "" . $name;
+
+});

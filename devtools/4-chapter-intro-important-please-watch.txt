@@ -1,0 +1,8 @@
+REFF:
+XAMPP : apachefriends.org/index.html
+LARAGON
+LARAVEL HOMESTEAD
+UDEMY LARAVEL HOMESTEAD
+=====================================
+
+1. part ini lebih ke introduce tools development 

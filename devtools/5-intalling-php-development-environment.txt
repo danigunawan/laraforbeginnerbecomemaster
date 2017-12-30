@@ -1,0 +1,21 @@
+REFF:
+DOWNLOAD XAMPP
+ATAU LARAGON
+
+=====================
+# XAMPP
+1. buka config apache(httpd.conf)
+2. ganti port bisa ganti dari 80 ke port 3000
+Listen 3000
+ServerName localhost:3000
+3. save
+4. buka config apache(httpd-ssl.conf)
+5. ganti port listen 443 jadi 1443
+6. ganti port vhost 443 menjadi <virtualhost _default_:1443>
+7. ganti port ServerName www.example.com:443 menjadi 1443
+8. buka config service settings ganti port apache service 
+- main port : 3000
+- ssl port : 1443
+- save
+9. start xampp
+10. localhost:3000/dashboard

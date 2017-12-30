@@ -1,0 +1,66 @@
+REFF:
+===============
+#route part 1
+1. buka routes.php
+
+# cms.dev
+Route::get('/', function(){
+
+return view('welcome')
+});
+
+#cms.dev/about
+
+Route::get('/about', function(){
+
+return "admin here";
+});
+
+#cms.dev/contact
+
+Route::get('/contact', function(){
+
+return "hi im here contact";
+});
+
+#cms.dev/post/2
+
+Route::get('/post/{id}', function($id){
+
+return "this is post number". $id;
+
+});
+
+#cms.dev/post/2/dani
+
+Route::get('/post/{id}/{name}', function($id, $name){
+
+return "this is post number". $id . "" . $name;
+
+});
+
+
+## NAMING ROUTES
+
+1. buka routes tambahkan :
+
+#cms.dev/admin/post/example
+
+Route::get('admin/post/example', array('as'=>'admin.home', function($id, $name){
+$url = route('admin.home');
+return "this is" . $url;
+
+}));
+
+
+# CONTOH 2
+
+#cms.dev/admin/post/example
+
+Route::get('admin/post/example', array('as'=>'admin.home', function($id, $name){
+<a href="route('admin.home')">CLICK HERE</a>
+return "this is" . $url;
+
+}));
+
+2. php artisan route:list

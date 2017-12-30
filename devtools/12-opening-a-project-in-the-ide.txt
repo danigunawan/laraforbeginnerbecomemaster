@@ -1,0 +1,4 @@
+REFF:
+===================
+1. buka phpstorm
+2. open project laravel

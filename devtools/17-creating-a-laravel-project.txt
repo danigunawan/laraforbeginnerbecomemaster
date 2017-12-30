@@ -1,0 +1,8 @@
+REFF:
+===========
+1. buka terminal ~:htodcs
+2. composer create-project --prefer-dist laravel/laravel yourprojectname 5.2.29
+3. cd cms
+4. cd .. # kehtdocs
+5. chmod -R o+w yourprojectname/storage
+6. start server buka project di url pastikan tidak blank
