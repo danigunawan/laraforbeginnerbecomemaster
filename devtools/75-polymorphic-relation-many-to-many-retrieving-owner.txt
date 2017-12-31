@@ -1,0 +1,22 @@
+REFF: 
+===================
+1. buka routes/web.php
+tambahkan :
+
+use App\Tag;
+
+dan 
+
+#POLYMORPHIC MANY TO MANY RETRIEVING BY OWNER (TAG)
+Route::get('tag/post', function(){
+$tag = Tag::find(2); 
+
+// return $tag->posts;
+
+ foreach ($tag->posts as $key => $post) {
+ 	# code...
+ 	echo $post->title;
+ }
+});
+ 
+2. cms.dev/tag/post

@@ -1,0 +1,44 @@
+REFF:
+=============
+1. kita insert data user sebagai dummy menggunakan heidiSQL :
+
+table videos
+========
+name = isi dengan apa aja
+
+table tags
+========
+name = isi dengan apa aja
+
+
+table taggables
+========
+
+#insert 1
+
+tag_id = 1
+taggable_id = 1 
+taggable_type = App\Video
+
+
+
+
+#insert 2
+
+tag_id = 2
+taggable_id = 1 
+taggable_type = App\Post
+
+2. buka routes/web.php
+tambahkan :
+
+#POLYMORPHIC MANY TO MANY
+Route::get('post/tag', function(){
+$post = Post::find(1); 
+ foreach ($post->tags as $key => $tag) {
+ 	# code...
+ 	echo $tag->name;
+ }
+});
+
+3. cms.dev/post/tag

@@ -1,0 +1,15 @@
+REFF:
+==================
+1. php artisan tinker
+>> $post = App\Post::create(['user_id'=>'2','title'=>'PHP post from tinker','content'=>'PHP content from tinker']);
+#jika tidak bisa insert field user_id NULL kan dulu
+
+>> $post
+
+
+2. $post = new App\Post
+$post
+$post->title = "New Title from this object"
+$post
+$post->content = "yeah baby I\'m coding and doing awesome"
+$post->save()

@@ -1,3 +1,16 @@
 REFF:
 =================
-1.
+1. buka routes/web.php
+tambahkan :
+
+use App\Photo;
+
+dan :
+
+#POLYMORPHIC DINAMIS RELATION THE INVERSE
+Route::get('user/{id}/post', function($id){
+$photo = Photo::findOrFail($id); 
+ return $photo->imageable;
+});
+
+2. cms.dev/user/2/post

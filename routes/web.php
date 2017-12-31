@@ -2,6 +2,8 @@
 use App\Country;
 use App\Post;
 use App\User;
+use App\Photo;
+use App\Tag;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -373,3 +375,33 @@ foreach ($posts->photos as $key => $post) {
 	echo $post->path . "<br>";
 }
 });
+
+
+#POLYMORPHIC DINAMIS RELATION THE INVERSE
+Route::get('user/{id}/post', function($id){
+$photo = Photo::findOrFail($id); 
+ return $photo->imageable;
+});
+
+#POLYMORPHIC MANY TO MANY
+Route::get('post/tag', function(){
+$post = Post::find(1); 
+ foreach ($post->tags as $key => $tag) {
+ 	# code...
+ 	echo $tag->name;
+ }
+});
+
+
+#POLYMORPHIC MANY TO MANY RETRIEVING BY OWNER (TAG)
+Route::get('tag/post', function(){
+$tag = Tag::find(2); 
+
+// return $tag->posts;
+
+ foreach ($tag->posts as $key => $post) {
+ 	# code...
+ 	echo $post->title;
+ }
+});
+
